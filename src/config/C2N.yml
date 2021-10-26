@@ -1,0 +1,116 @@
+session: tmp
+
+# region - model
+model:
+  CLtoN_G: CLtoN_G
+  CLtoN_D: CLtoN_D
+  DNer: CDnCNN_B
+
+  color: BGR
+
+  GAN_n_r: 32
+  GAN_use_caminfo: False
+  GAN_use_ISO: False
+  GAN_use_temperature: False
+
+  modcrop: 8
+  infer_split_size: None
+  infer_split_margin: None
+# endregion - model
+
+# region - common train
+train:
+  aug: 'rotflip'
+# endregion - common train
+
+# region - train_GAN
+train_GAN:
+  n_epoch: 36
+  batch_size: 36
+  imsize: 96
+  n_patch: 36000
+
+  loss:
+    GAN_adv: 1.*wGAN-GP
+    GAN_con: 1e-2*batch_zero_mean
+
+  lr: 1e-4
+  lr_sched:
+    type: step
+    step:
+      step_size: 3
+      gamma: 0.8
+  
+  dset_N: prep_SIDD_Medium_sRGB
+  dset_CL: prep_SIDD_Medium_sRGB
+  noise_additive: None
+  salt_pepper: None
+  crop_patch: True
+  
+  preload: False
+# endregion - train_GAN
+
+# region - val_GAN
+val_GAN:
+  dset: part_SIDD_Medium_sRGB
+
+  noise_additive: None
+  salt_pepper: None
+
+  val_start: 18
+
+  n_repeat: 1
+
+  imsave: True
+  imsave_recent: 36
+# endregion - val_GAN
+
+# region - record
+record:
+  ckpt_interval_ep: 1
+  ckpt_recent_GAN: 4
+  ckpt_recent_DNer: 17
+  log_interval_itr: 100
+  val_interval_ep: 1
+  use_tboard: True
+# endregion - record
+
+# region - train_DNer
+train_DNer:
+  n_epoch: 32
+  batch_size: 16
+  imsize: 96
+
+  loss:
+    DN: 1.*L1
+  
+  lr: 1e-4
+  lr_sched:
+    type: step
+    step:
+      step_size: 4
+      gamma: 0.71
+  
+  dset: None
+  # dset: prep_SIDD_Medium_sRGB
+  noise_additive: None
+  salt_pepper: None
+  crop_patch: True
+
+  dset_gen_CL: None
+  n_patch_gen: 18000
+  loadname_CLtoN: None
+# endregion - train_DNer
+
+# region - val_DNer
+val_DNer:
+  dset: SIDD_val
+
+  noise_additive: None
+  salt_pepper: None
+
+  val_start: 16
+
+  imsave: True
+  imsave_recent: 17
+# endregion - val_DNer
