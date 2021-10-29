@@ -2,8 +2,6 @@ import torch
 import torch.distributions as torch_distb
 import torch.nn as nn
 
-# ==================================================
-
 
 class ResBlock(nn.Module):
     def __init__(self, n_ch_in, ksize=3, bias=True):

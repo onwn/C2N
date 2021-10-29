@@ -1,8 +1,6 @@
 import torch
 import torch.nn as nn
 
-# ==================================================
-
 
 class DnCNN(nn.Module):
     def __init__(self, n_ch_in, n_ch_out, n_block):
@@ -53,8 +51,6 @@ class DnCNN(nn.Module):
                         m.weight.data[j] = -clip_b
                 m.running_var.fill_(0.01)
 
-# ==================================================
-
 
 class DnCNN_S(DnCNN):
     def __init__(self, n_ch_in=1, n_ch_out=1):
@@ -74,8 +70,6 @@ class CDnCNN_S(DnCNN):
 class CDnCNN_B(DnCNN):
     def __init__(self, n_ch_in=3, n_ch_out=3):
         super(CDnCNN_B, self).__init__(n_ch_in, n_ch_out, n_block=20)
-
-# ==================================================
 
 
 if __name__ == '__main__':

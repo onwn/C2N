@@ -225,8 +225,6 @@ class DIDN(nn.Module):
 
         return out
 
-# ==================================================
-
 
 class DIDN_6(DIDN):
     def __init__(self, n_ch_in, n_ch_out):
@@ -236,8 +234,6 @@ class DIDN_6(DIDN):
 class DIDN_8(DIDN):
     def __init__(self, n_ch_in, n_ch_out):
         super(DIDN_8, self).__init__(n_ch_in, n_ch_out, n_DUB=8)
-
-# ==================================================
 
 
 if __name__ == '__main__':
