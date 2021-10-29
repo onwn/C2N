@@ -1,2 +1,2 @@
 
-python test_generate.py --config ./src/config/C2N.json --ckpt ./ckpt/C2N.pth --mode single --data ./data/test/img.png --gpu 0
+python test_generate.py --config ./src/config/C2N.yml --ckpt ./ckpt/C2N-SIDD_to_SIDD.ckpt --mode single --data ./data/test_clean/0047_DN.png --gpu 0

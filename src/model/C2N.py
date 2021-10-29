@@ -67,7 +67,7 @@ class C2N_D(nn.Module):
         return y
 
 class C2N_G(nn.Module):
-    def __init__(self, n_ch_in, n_ch_out, n_ch_r):
+    def __init__(self, n_ch_in, n_ch_out, n_r):
         self.n_ch_unit = 64         # number of base channel
         self.n_ext = 5              # number of residual blocks in feature extractor           
         self.n_block_indep = 3      # number of residual blocks in independent module
@@ -75,7 +75,7 @@ class C2N_G(nn.Module):
 
         self.n_ch_in = n_ch_in      # number of input channels
         self.n_ch_out = n_ch_out    # number of output channels
-        self.n_ch_r = n_ch_r        # length of r vector
+        self.n_r = n_r        # length of r vector
 
         super().__init__()
 
@@ -83,7 +83,7 @@ class C2N_G(nn.Module):
         self.ext_head = nn.Sequential(  nn.Conv2d(n_ch_in, self.n_ch_unit, 3, padding=1, bias=True, padding_mode='reflect'),
                                         nn.PReLU(),
                                         nn.Conv2d(self.n_ch_unit, self.n_ch_unit*2, 3, padding=1, bias=True, padding_mode='reflect'))
-        self.ext_merge = nn.Sequential( nn.Conv2d((self.n_ch_unit*2) + self.n_ch_r, 2*self.n_ch_unit, 3, padding=1, bias=True, padding_mode='reflect'),
+        self.ext_merge = nn.Sequential( nn.Conv2d((self.n_ch_unit*2) + self.n_r, 2*self.n_ch_unit, 3, padding=1, bias=True, padding_mode='reflect'),
                                         nn.PReLU())
         self.ext = nn.Sequential(*[ResBlock(2*self.n_ch_unit) for i in range(self.n_ext)])
 
@@ -105,7 +105,7 @@ class C2N_G(nn.Module):
 
         # r map
         if r_vector is None:
-            r_vector = torch.randn(N, self.n_ch_r)
+            r_vector = torch.randn(N, self.n_r)
         r_vector.to(x.device)
         r_map = r_vector.unsqueeze(-1).unsqueeze(-1).repeat(1,1,H,W)
         r_map = r_map.float().detach()

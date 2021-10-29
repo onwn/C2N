@@ -71,20 +71,20 @@ class DnCNN(nn.Module):
 # ==================================================
 
 class DnCNN_S(DnCNN):
-    def __init__(self, n_ch_in, n_ch_out):
-        super(DnCNN_S, self).__init__(n_ch_in=1, n_ch_out=1, n_block=17)
+    def __init__(self, n_ch_in=1, n_ch_out=1):
+        super(DnCNN_S, self).__init__(n_ch_in, n_ch_out, n_block=17)
 
 class DnCNN_B(DnCNN):
-    def __init__(self, n_ch_in, n_ch_out):
-        super(DnCNN_B, self).__init__(n_ch_in=1, n_ch_out=1, n_block=20)
+    def __init__(self, n_ch_in=1, n_ch_out=1):
+        super(DnCNN_B, self).__init__(n_ch_in, n_ch_out, n_block=20)
 
 class CDnCNN_S(DnCNN):
-    def __init__(self, n_ch_in, n_ch_out):
-        super(CDnCNN_S, self).__init__(n_ch_in=3, n_ch_out=3, n_block=17)
+    def __init__(self, n_ch_in=3, n_ch_out=3):
+        super(CDnCNN_S, self).__init__(n_ch_in, n_ch_out, n_block=17)
 
 class CDnCNN_B(DnCNN):
-    def __init__(self, n_ch_in, n_ch_out):
-        super(CDnCNN_B, self).__init__(n_ch_in=3, n_ch_out=3, n_block=20)
+    def __init__(self, n_ch_in=3, n_ch_out=3):
+        super(CDnCNN_B, self).__init__(n_ch_in, n_ch_out, n_block=20)
 
 # ==================================================
 
