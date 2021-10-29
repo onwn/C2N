@@ -1,21 +1,5 @@
-# ==================================================
-# [path configuration]
-
-import sys
-import os
-path_thisfile = os.path.dirname(os.path.abspath(__file__))
-path_root = os.path.normpath(os.path.join(path_thisfile, '..', '..'))
-if not path_root in sys.path:
-    sys.path.append(path_root)
-
-# ==================================================
-
-import numpy as np
-import math
-
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 # ==================================================
 
@@ -31,18 +15,19 @@ class DnCNN(nn.Module):
 
         layers = []
         layers.append(nn.Conv2d(n_ch_in, self.n_ch_unit, self.conv_ksize,
-                                padding=(self.conv_ksize//2), groups=1, bias=True))   # bias=True for head and tail
+                                padding=(self.conv_ksize // 2), groups=1, bias=True))
         layers.append(nn.ReLU(inplace=True))
 
-        for _ in range(self.n_block-2):
+        for _ in range(self.n_block - 2):
             layers.append(nn.Conv2d(self.n_ch_unit, self.n_ch_unit, self.conv_ksize,
-                                    padding=(self.conv_ksize//2), groups=1, bias=False))
+                                    padding=(self.conv_ksize // 2),
+                                    groups=1, bias=False))
             if self.batch_norm:
                 layers.append(nn.BatchNorm2d(self.n_ch_unit))
             layers.append(nn.ReLU(inplace=True))
 
         layers.append(nn.Conv2d(self.n_ch_unit, n_ch_out, self.conv_ksize,
-                                padding=(self.conv_ksize//2), groups=1, bias=True))   # bias=True for head and tail
+                                padding=(self.conv_ksize // 2), groups=1, bias=True))
 
         self.body = nn.Sequential(*layers)
 
@@ -70,17 +55,21 @@ class DnCNN(nn.Module):
 
 # ==================================================
 
+
 class DnCNN_S(DnCNN):
     def __init__(self, n_ch_in=1, n_ch_out=1):
         super(DnCNN_S, self).__init__(n_ch_in, n_ch_out, n_block=17)
+
 
 class DnCNN_B(DnCNN):
     def __init__(self, n_ch_in=1, n_ch_out=1):
         super(DnCNN_B, self).__init__(n_ch_in, n_ch_out, n_block=20)
 
+
 class CDnCNN_S(DnCNN):
     def __init__(self, n_ch_in=3, n_ch_out=3):
         super(CDnCNN_S, self).__init__(n_ch_in, n_ch_out, n_block=17)
+
 
 class CDnCNN_B(DnCNN):
     def __init__(self, n_ch_in=3, n_ch_out=3):
@@ -88,9 +77,9 @@ class CDnCNN_B(DnCNN):
 
 # ==================================================
 
+
 if __name__ == '__main__':
     x = torch.randn(2, 3, 64, 64)
 
-    cdncnnb = CDnCNN_B(3,3)
+    cdncnnb = CDnCNN_B(3, 3)
     print(cdncnnb(x).shape)
-    

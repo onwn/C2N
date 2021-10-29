@@ -31,13 +31,13 @@ train_GAN:
     step:
       step_size: 3
       gamma: 0.8
-  
+
   dset_N: prep_SIDD_Medium_sRGB
   dset_CL: prep_SIDD_Medium_sRGB
   noise_additive: None
   salt_pepper: None
   crop_patch: True
-  
+
   preload: False
 # endregion - train_GAN
 
@@ -49,14 +49,14 @@ train_DNer:
 
   loss:
     DN: 1.*L1
-  
+
   lr: 1e-4
   lr_sched:
     type: step
     step:
       step_size: 4
       gamma: 0.71
-  
+
   dset: prep_SIDD_Medium_sRGB
   noise_additive: None
   salt_pepper: None

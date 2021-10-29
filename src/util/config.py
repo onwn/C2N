@@ -1,4 +1,5 @@
-import yaml, os
+import yaml
+
 
 class ConfigParser:
     def __init__(self, args):
@@ -23,15 +24,16 @@ class ConfigParser:
             if isinstance(d[key], dict):
                 self.convert_None(d[key])
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     import argparse
     args = argparse.ArgumentParser()
     args.add_argument('-c', '--config', default=None, type=str)
     args.add_argument('-d', '--device', default=None, type=str)
     args.add_argument('-r', '--resume', action='store_true')
-    
+
     args = args.parse_args()
 
-    args.config = "./conf/resnet_cfg.yaml"
+    args.config = './conf/resnet_cfg.yaml'
 
     cp = ConfigParser(args)

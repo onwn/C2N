@@ -20,6 +20,8 @@ repos:
           - "--max-line-length=88"
           # E501: really long comments
           - "--ignore=E501"
+          # E241: multiple spaces after ','
+          - "--ignore=E241"
 
   - repo: https://github.com/pycqa/isort
     rev: 5.8.0

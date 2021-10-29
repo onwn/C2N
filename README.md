@@ -27,9 +27,9 @@ If you find C2N useful in your research, please cite our work as follows:
 
 ## Dependencies
 
-- Python 3.7.9
-- numpy 1.16.4
-- cudatoolkit 10.
+- Python 3.9.6
+- numpy >= 1.16.4
+- cudatoolkit >= 10.
 - PyTorch 1.2.0
 - scikit-image 0.15.0
 - tqdm
@@ -39,18 +39,18 @@ If you find C2N useful in your research, please cite our work as follows:
 
 You can manually setup an environment or follow below steps:
 
-#### With Conda
-
-```bash
-
-```
-
 #### With Pyenv
 
 ```bash
-pyenv install 3.7.9 && pyenv virtualenv 3.7.9 C2N
+pyenv install 3.9.6 && pyenv virtualenv 3.7.9 C2N
 pyenv activate C2N
 pip install -r requirements.txt
+```
+
+#### With Conda
+
+```bash
+conda create -f requirements.yml
 ```
 
 <!-- #### Docker

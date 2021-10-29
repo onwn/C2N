@@ -1,77 +1,73 @@
-# ==================================================
-# [path configuration]
-
-import sys
-import os
-path_thisfile = os.path.dirname(os.path.abspath(__file__))
-path_root = os.path.normpath(os.path.join(path_thisfile, '..'))
-if not path_root in sys.path:
-    sys.path.append(path_root)
-
-# ==================================================
-
-import numpy as np
-import math
-
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-from torch.autograd import Variable
 
-# ==================================================
 
 class _Residual_Block(nn.Module):
     def __init__(self):
         super(_Residual_Block, self).__init__()
 
-        #res1
-        self.conv1 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
+        # res1
+        self.conv1 = nn.Conv2d(in_channels=256, out_channels=256,
+                               kernel_size=3, stride=1, padding=1, bias=False)
         self.relu2 = nn.PReLU()
-        self.conv3 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv3 = nn.Conv2d(in_channels=256, out_channels=256,
+                               kernel_size=3, stride=1, padding=1, bias=False)
         self.relu4 = nn.PReLU()
-        #res1
-        #concat1
+        # res1
+        # concat1
 
-        self.conv5 = nn.Conv2d(in_channels=256, out_channels=512, kernel_size=3, stride=2, padding=1, bias=False)
+        self.conv5 = nn.Conv2d(in_channels=256, out_channels=512,
+                               kernel_size=3, stride=2, padding=1, bias=False)
         self.relu6 = nn.PReLU()
 
-        #res2
-        self.conv7 = nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, stride=1, padding=1, bias=False)
+        # res2
+        self.conv7 = nn.Conv2d(in_channels=512, out_channels=512,
+                               kernel_size=3, stride=1, padding=1, bias=False)
         self.relu8 = nn.PReLU()
-        #res2
-        #concat2
+        # res2
+        # concat2
 
-        self.conv9 = nn.Conv2d(in_channels=512, out_channels=1024, kernel_size=3, stride=2, padding=1, bias=False)
+        self.conv9 = nn.Conv2d(in_channels=512, out_channels=1024,
+                               kernel_size=3, stride=2, padding=1, bias=False)
         self.relu10 = nn.PReLU()
 
-        #res3
-        self.conv11 = nn.Conv2d(in_channels=1024, out_channels=1024, kernel_size=3, stride=1, padding=1, bias=False)
+        # res3
+        self.conv11 = nn.Conv2d(in_channels=1024, out_channels=1024,
+                                kernel_size=3, stride=1, padding=1, bias=False)
         self.relu12 = nn.PReLU()
-        #res3
+        # res3
 
-        self.conv13 = nn.Conv2d(in_channels=1024, out_channels=2048, kernel_size=1, stride=1, padding=0, bias=False)
+        self.conv13 = nn.Conv2d(in_channels=1024, out_channels=2048,
+                                kernel_size=1, stride=1, padding=0, bias=False)
         self.up14 = nn.PixelShuffle(2)
 
-        #concat2
-        self.conv15 = nn.Conv2d(in_channels=1024, out_channels=512, kernel_size=1, stride=1, padding=0, bias=False)
-        #res4
-        self.conv16 = nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, stride=1, padding=1, bias=False)
+        # concat2
+        self.conv15 = nn.Conv2d(in_channels=1024, out_channels=512,
+                                kernel_size=1, stride=1, padding=0, bias=False)
+        # res4
+        self.conv16 = nn.Conv2d(in_channels=512, out_channels=512,
+                                kernel_size=3, stride=1, padding=1, bias=False)
         self.relu17 = nn.PReLU()
-        #res4
+        # res4
 
-        self.conv18 = nn.Conv2d(in_channels=512, out_channels=1024, kernel_size=1, stride=1, padding=0, bias=False)
+        self.conv18 = nn.Conv2d(in_channels=512, out_channels=1024,
+                                kernel_size=1, stride=1, padding=0, bias=False)
         self.up19 = nn.PixelShuffle(2)
 
-        #concat1
-        self.conv20 = nn.Conv2d(in_channels=512, out_channels=256, kernel_size=1, stride=1, padding=0, bias=False)
-        #res5
-        self.conv21 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
+        # concat1
+        self.conv20 = nn.Conv2d(in_channels=512, out_channels=256,
+                                kernel_size=1, stride=1, padding=0, bias=False)
+        # res5
+        self.conv21 = nn.Conv2d(in_channels=256, out_channels=256,
+                                kernel_size=3, stride=1, padding=1, bias=False)
         self.relu22 = nn.PReLU()
-        self.conv23 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv23 = nn.Conv2d(in_channels=256, out_channels=256,
+                                kernel_size=3, stride=1, padding=1, bias=False)
         self.relu24 = nn.PReLU()
-        #res5
+        # res5
 
-        self.conv25 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv25 = nn.Conv2d(in_channels=256, out_channels=256,
+                                kernel_size=3, stride=1, padding=1, bias=False)
 
     def forward(self, x):
         res1 = x
@@ -112,31 +108,41 @@ class _Residual_Block(nn.Module):
 
         return out
 
+
 class Recon_Block(nn.Module):
     def __init__(self):
         super(Recon_Block, self).__init__()
 
-        self.conv1 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv1 = nn.Conv2d(in_channels=256, out_channels=256,
+                               kernel_size=3, stride=1, padding=1, bias=False)
         self.relu2 = nn.PReLU()
-        self.conv3 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv3 = nn.Conv2d(in_channels=256, out_channels=256,
+                               kernel_size=3, stride=1, padding=1, bias=False)
         self.relu4 = nn.PReLU()
 
-        self.conv5 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
-        self.relu6= nn.PReLU()
-        self.conv7 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv5 = nn.Conv2d(in_channels=256, out_channels=256,
+                               kernel_size=3, stride=1, padding=1, bias=False)
+        self.relu6 = nn.PReLU()
+        self.conv7 = nn.Conv2d(in_channels=256, out_channels=256,
+                               kernel_size=3, stride=1, padding=1, bias=False)
         self.relu8 = nn.PReLU()
 
-        self.conv9 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv9 = nn.Conv2d(in_channels=256, out_channels=256,
+                               kernel_size=3, stride=1, padding=1, bias=False)
         self.relu10 = nn.PReLU()
-        self.conv11 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv11 = nn.Conv2d(in_channels=256, out_channels=256,
+                                kernel_size=3, stride=1, padding=1, bias=False)
         self.relu12 = nn.PReLU()
 
-        self.conv13 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv13 = nn.Conv2d(in_channels=256, out_channels=256,
+                                kernel_size=3, stride=1, padding=1, bias=False)
         self.relu14 = nn.PReLU()
-        self.conv15 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv15 = nn.Conv2d(in_channels=256, out_channels=256,
+                                kernel_size=3, stride=1, padding=1, bias=False)
         self.relu16 = nn.PReLU()
 
-        self.conv17 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv17 = nn.Conv2d(in_channels=256, out_channels=256,
+                                kernel_size=3, stride=1, padding=1, bias=False)
 
     def forward(self, x):
         res1 = x
@@ -160,29 +166,36 @@ class Recon_Block(nn.Module):
 
         return output
 
+
 class DIDN(nn.Module):
     def __init__(self, n_ch_in, n_ch_out, n_DUB):
         self.n_DUB = n_DUB
 
         super(DIDN, self).__init__()
 
-        self.conv_input = nn.Conv2d(in_channels=n_ch_in, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv_input = nn.Conv2d(in_channels=n_ch_in, out_channels=256,
+                                    kernel_size=3, stride=1, padding=1, bias=False)
         self.relu1 = nn.PReLU()
-        self.conv_down = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=2, padding=1, bias=False)
+        self.conv_down = nn.Conv2d(in_channels=256, out_channels=256,
+                                   kernel_size=3, stride=2, padding=1, bias=False)
         self.relu2 = nn.PReLU()
 
         self.list_DUB = nn.ModuleList([_Residual_Block() for cnt in range(n_DUB)])
-        
-        self.recon = Recon_Block()
-        #concat
 
-        self.conv_mid = nn.Conv2d(in_channels=256*len(self.list_DUB), out_channels=256, kernel_size=1, stride=1, padding=0, bias=False)
+        self.recon = Recon_Block()
+        # concat
+
+        self.conv_mid = nn.Conv2d(in_channels=256 * len(self.list_DUB),
+                                  out_channels=256,
+                                  kernel_size=1, stride=1, padding=0, bias=False)
         self.relu3 = nn.PReLU()
-        self.conv_mid2 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv_mid2 = nn.Conv2d(in_channels=256, out_channels=256,
+                                   kernel_size=3, stride=1, padding=1, bias=False)
         self.relu4 = nn.PReLU()
 
         self.subpixel = nn.PixelShuffle(2)
-        self.conv_output = nn.Conv2d(in_channels=64, out_channels=n_ch_out, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv_output = nn.Conv2d(in_channels=64, out_channels=n_ch_out,
+                                     kernel_size=3, stride=1, padding=1, bias=False)
 
     def forward(self, x):
         residual = x
@@ -206,7 +219,7 @@ class DIDN(nn.Module):
         out = self.relu4(self.conv_mid2(out))
         out = torch.add(out, residual2)
 
-        out= self.subpixel(out)
+        out = self.subpixel(out)
         out = self.conv_output(out)
         out = torch.add(out, residual)
 
@@ -214,9 +227,11 @@ class DIDN(nn.Module):
 
 # ==================================================
 
+
 class DIDN_6(DIDN):
     def __init__(self, n_ch_in, n_ch_out):
         super(DIDN_6, self).__init__(n_ch_in, n_ch_out, n_DUB=6)
+
 
 class DIDN_8(DIDN):
     def __init__(self, n_ch_in, n_ch_out):
@@ -224,7 +239,8 @@ class DIDN_8(DIDN):
 
 # ==================================================
 
+
 if __name__ == '__main__':
-    x = torch.randn(2,3,64,64)
+    x = torch.randn(2, 3, 64, 64)
     model = DIDN_8(n_ch_in=3, n_ch_out=3)
     print(model(x).shape)

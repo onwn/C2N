@@ -1,15 +1,5 @@
-# region - path configuration
-import sys
-import os
-path_thisfile = os.path.dirname(os.path.abspath(__file__))
-path_root = os.path.normpath(os.path.join(path_thisfile, '..', '..'))
-if not path_root in sys.path:
-    sys.path.append(path_root)
-# endregion - path configuration
-
 import numpy as np
 
-# ==================================================
 
 def str_flexible(v):
     if v == 'undef':
@@ -21,6 +11,7 @@ def str_flexible(v):
     else:
         return str(v)
         # print("invalid string argument: {}".format(v))
+
 
 def bool_flexible(v):
     if v == 'undef':
@@ -34,7 +25,8 @@ def bool_flexible(v):
     elif v.lower() in ('no', 'false', 'f', 'n'):
         return False
     else:
-        print("invalid boolean argument: {}".format(v))
+        print('invalid boolean argument: {}'.format(v))
+
 
 def int_flexible(v):
     if v == 'undef':
@@ -46,6 +38,7 @@ def int_flexible(v):
     else:
         return int(v)
         # print("invalid integer argument: {}".format(v))
+
 
 def float_flexible(v):
     if v == 'undef':
@@ -61,10 +54,11 @@ def float_flexible(v):
         return float(v)
         # print("invalid float argument: {}".format(v))
 
+
 class ndarray_flexible():
     def __init__(self, dtype):
-        self.dtype=dtype
-    
+        self.dtype = dtype
+
     # TODO: dunno how to handle if the input is a string like '[1., 2., 3.]'
     def __call__(self, v):
         # TODO: how to compare the whole v with None or 'undef'?
@@ -73,7 +67,8 @@ class ndarray_flexible():
         elif isinstance(v, list) or isinstance(v, tuple):
             return np.array(v)
         else:
-            print("invalid ndarray argument: {}".format(v))
+            print('invalid ndarray argument: {}'.format(v))
+
 
 if __name__ == '__main__':
     pass

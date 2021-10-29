@@ -1,0 +1,16 @@
+name: C2N
+dependencies:
+  - python=3.9.6
+  - numpy=1.16.4
+  - cudatoolkit=10.
+  - pip
+  - pip:
+      - imutils
+  - cython
+  - tqdm
+  - pyyaml
+  - conda-forge::opencv
+  - pytorch::pytorch=1.2.0
+  - pytorch::torchvision
+  - conda-forge::scikit-image=0.15.0
+  - pillow
