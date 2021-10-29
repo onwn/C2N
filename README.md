@@ -1,25 +1,80 @@
-# C2N: Practical Generative Noise Modeling for Real-World Denoising - Official pyTorch implementation
+# C2N: Practical Generative Noise Modeling for Real-World Denoising - Official pyTorch release
 
-Geonwoon Jang*, Wooseok Lee*, Sanghyun Son, Kyoung Mu Lee
-
-**Abstract:**
-
-Learning-based image denoising methods have been bounded to situations where well-aligned noisy and clean images are given, or samples are synthesized from predetermined noise models, e.g., Gaussian. While recent generative noise modeling methods aim to simulate the unknown distribution of real-world noise, several limitations still exist. In a practical scenario, a noise generator should learn to simulate the general and complex noise distribution without using paired noisy and clean images. However, since existing methods are constructed on the unrealistic assumption of real-world noise, they tend to generate implausible patterns and cannot express complicated noise maps. Therefore, we introduce a Clean-to-Noisy image generation framework, namely C2N, to imitate complex real-world noise without using any paired examples. We construct the noise generator in C2N accordingly with each component of real-world noise characteristics to express a wide range of noise accurately. Combined with our C2N, conventional denoising CNNs can be trained to outperform existing unsupervised methods on challenging real-world benchmarks by a large margin.
+This is an official PyTorch release of the paper
+[**"C2N: Practical Generative Noise Modeling for Real-World Denoising"**](https://openaccess.thecvf.com/content/ICCV2021/papers/Jang_C2N_Practical_Generative_Noise_Modeling_for_Real-World_Denoising_ICCV_2021_paper.pdf)
+from **ICCV 2021**.
 
 ![architecture](./imgs/architecture.png)
 
-## Demo for noise generation
+If you find C2N useful in your research, please cite our work as follows:
 
-| Generator | Noisy | Clean | config | Pre-trained |
-|:--:|:--:|:--:|:--:|:--:|
-| C2N | SIDD | SIDD | C2N_DnCNN | [model]() |
-| C2N | DND | SIDD | C2N_DnCNN | [model]() |
+```
+@InProceedings{Jang_2021_ICCV,
+    author    = {Jang, Geonwoon and Lee, Wooseok and Son, Sanghyun and Lee, Kyoung Mu},
+    title     = {C2N: Practical Generative Noise Modeling for Real-World Denoising},
+    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+    month     = {October},
+    year      = {2021},
+    pages     = {2350-2359}
+}
+```
 
-## Demo for denoising
+[[PDF](https://openaccess.thecvf.com/content/ICCV2021/papers/Jang_C2N_Practical_Generative_Noise_Modeling_for_Real-World_Denoising_ICCV_2021_paper.pdf)]
+[[Supp](https://openaccess.thecvf.com/content/ICCV2021/supplemental/Jang_C2N_Practical_Generative_ICCV_2021_supplemental.pdf)]
+[arXiv]
 
-| Denoiser | Generator | Noisy | Clean | Clean (denoiser) | config | Pre-trained |
-|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| DnCNN | C2N | SIDD | SIDD | SIDD | C2N_DnCNN | [model]() |
-| DIDN | C2N | SIDD | SIDD | SIDD | C2N_DIDN | [model]() |
-| DnCNN | C2N | DND | SIDD | DND | C2N_DnCNN | [model]() |
-| DIDN | C2N | DND | SIDD | DND | C2N_DIDN | [model]() |
+---
+
+## Dependencies
+
+- Python 3.7.9
+- numpy 1.16.4
+- cudatoolkit 10.
+- PyTorch 1.2.0
+- scikit-image 0.15.0
+- tqdm
+- pillow
+- pyyamml
+- imutils
+
+You can manually setup an environment or follow below steps:
+
+#### With Conda
+
+```bash
+
+```
+
+#### With Pyenv
+
+```bash
+pyenv install 3.7.9 && pyenv virtualenv 3.7.9 C2N
+pyenv activate C2N
+pip install -r requirements.txt
+```
+
+<!-- #### Docker
+
+```
+
+``` -->
+
+---
+
+## Demo
+
+### Noise generation
+
+| Generator | Noisy | Clean |  config   | Pre-trained |
+| :-------: | :---: | :---: | :-------: | :---------: |
+|    C2N    | SIDD  | SIDD  | C2N_DnCNN |  [model]()  |
+|    C2N    |  DND  | SIDD  | C2N_DnCNN |  [model]()  |
+
+### Denoising
+
+| Denoiser | Generator | Noisy | Clean | Clean (denoiser) |  config   | Pre-trained |
+| :------: | :-------: | :---: | :---: | :--------------: | :-------: | :---------: |
+|  DnCNN   |    C2N    | SIDD  | SIDD  |       SIDD       | C2N_DnCNN |  [model]()  |
+|   DIDN   |    C2N    | SIDD  | SIDD  |       SIDD       | C2N_DIDN  |  [model]()  |
+|  DnCNN   |    C2N    |  DND  | SIDD  |       DND        | C2N_DnCNN |  [model]()  |
+|   DIDN   |    C2N    |  DND  | SIDD  |       DND        | C2N_DIDN  |  [model]()  |
