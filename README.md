@@ -76,5 +76,4 @@ conda create -f requirements.yml
 | :------: | :-------: | :---: | :---: | :--------------: | :-------: | :---------: |
 |  DnCNN   |    C2N    | SIDD  | SIDD  |       SIDD       | C2N_DnCNN |  [model]()  |
 |   DIDN   |    C2N    | SIDD  | SIDD  |       SIDD       | C2N_DIDN  |  [model]()  |
-|  DnCNN   |    C2N    |  DND  | SIDD  |       DND        | C2N_DnCNN |  [model]()  |
 |   DIDN   |    C2N    |  DND  | SIDD  |       DND        | C2N_DIDN  |  [model]()  |
