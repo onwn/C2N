@@ -33,7 +33,7 @@ def main():
 
     denoise(configs)
 
-
+@torch.no_grad()
 def denoise(configs):
     # model load
     denoiser = get_model(configs['model']['Denoiser'])
@@ -41,6 +41,7 @@ def denoise(configs):
         denoiser = denoiser.cuda()
     ckpt = torch.load(configs['ckpt'])
     denoiser.load_state_dict(ckpt)
+    denoiser.eval()
     print('model loaded!')
 
     # make results folder
@@ -53,10 +54,10 @@ def denoise(configs):
         tag_data = os.path.splitext(fname_data)[0]
         fpath_output = f'./results/{tag_data}_denoised.png'
         cv2.imwrite(fpath_output, denoised)
-        print('denoised %s' % (configs['data']))
+        print('denoised to %s' % (fpath_output))
     elif configs['mode'] == 'dataset':
         for (dirpath, _, filenames) in os.walk(configs['data']):
-            folder_name = os.path.dirname(dirpath)
+            folder_name = os.path.basename(os.path.normpath(dirpath))
             os.makedirs('./results/%s' % folder_name, exist_ok=True)
 
             for filename in filenames:
@@ -65,7 +66,7 @@ def denoise(configs):
                 tag_data = os.path.splitext(filename)[0]
                 fpath_output = f'./results/{folder_name}/{tag_data}_denoised.png'
                 cv2.imwrite(fpath_output, denoised)
-                print('denoised %s' % (configs['data']))
+                print('denoised to %s' % (fpath_output))
 
 
 def denoise_single_img(configs, denoiser, img_path):
@@ -80,6 +81,7 @@ def denoise_single_img(configs, denoiser, img_path):
     denoised = denoised.cpu().detach().squeeze(0).numpy()
     denoised = denoised.transpose(1, 2, 0)
     denoised = denoised * 255.0
+    denoised = np.clip(denoised, 0., 255.)
     denoised = denoised.astype(np.uint8)
 
     return denoised

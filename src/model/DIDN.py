@@ -227,12 +227,12 @@ class DIDN(nn.Module):
 
 
 class DIDN_6(DIDN):
-    def __init__(self, n_ch_in, n_ch_out):
+    def __init__(self, n_ch_in=3, n_ch_out=3):
         super(DIDN_6, self).__init__(n_ch_in, n_ch_out, n_DUB=6)
 
 
 class DIDN_8(DIDN):
-    def __init__(self, n_ch_in, n_ch_out):
+    def __init__(self, n_ch_in=3, n_ch_out=3):
         super(DIDN_8, self).__init__(n_ch_in, n_ch_out, n_DUB=8)
 
 

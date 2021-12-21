@@ -31,16 +31,17 @@ def main():
 
     configs = ConfigParser(args)
 
-    denoise(configs)
+    generate(configs)
 
-
-def denoise(configs):
+@torch.no_grad()
+def generate(configs):
     # model load
     generator = get_model(configs['model']['Generator'])
     if configs['gpu'] is not None:
         generator = generator.cuda()
     ckpt = torch.load(configs['ckpt'])
     generator.load_state_dict(ckpt)
+    generator.eval()
     print('model loaded!')
 
     # make results folder
@@ -53,10 +54,10 @@ def denoise(configs):
         tag_data = os.path.splitext(fname_data)[0]
         fpath_output = f'./results/{tag_data}_generated.png'
         cv2.imwrite(fpath_output, generated)
-        print('generated %s' % (configs['data']))
+        print('generated to %s' % (fpath_output))
     elif configs['mode'] == 'dataset':
         for (dirpath, _, filenames) in os.walk(configs['data']):
-            folder_name = os.path.dirname(dirpath)
+            folder_name = dirpath.split('/')[-1]
             os.makedirs(f'./results/{folder_name}', exist_ok=True)
 
             for filename in filenames:
@@ -65,7 +66,7 @@ def denoise(configs):
                 tag_data = os.path.splitext(filename)[0]
                 fpath_output = f'./results/{folder_name}/{tag_data}_generated.png'
                 cv2.imwrite(fpath_output, generated)
-                print('generated %s' % (configs['data']))
+                print('generated to %s' % (fpath_output))
 
 
 def generate_single_img(configs, generator, img_path):
@@ -80,6 +81,7 @@ def generate_single_img(configs, generator, img_path):
     generated = generated.cpu().detach().squeeze(0).numpy()
     generated = generated.transpose(1, 2, 0)
     generated = generated * 255.0
+    generated = np.clip(generated, 0., 255.)
     generated = generated.astype(np.uint8)
 
     return generated

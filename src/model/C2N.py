@@ -1,7 +1,10 @@
 import torch
 import torch.distributions as torch_distb
 import torch.nn as nn
+import torch.nn.functional as F
 
+
+d = 1e-6
 
 class ResBlock(nn.Module):
     def __init__(self, n_ch_in, ksize=3, bias=True):
@@ -59,7 +62,7 @@ class C2N_D(nn.Module):
 
 
 class C2N_G(nn.Module):
-    def __init__(self, n_ch_in, n_ch_out, n_r):
+    def __init__(self, n_ch_in=3, n_ch_out=3, n_r=32):
         self.n_ch_unit = 64         # number of base channel
         self.n_ext = 5              # number of residual blocks in feature extractor
         self.n_block_indep = 3      # number of residual blocks in independent module
@@ -128,9 +131,9 @@ class C2N_G(nn.Module):
         # r map
         if r_vector is None:
             r_vector = torch.randn(N, self.n_r)
-        r_vector.to(x.device)
         r_map = r_vector.unsqueeze(-1).unsqueeze(-1).repeat(1, 1, H, W)
         r_map = r_map.float().detach()
+        r_map = r_map.to(x.device)
 
         # feat extractor
         feat_CL = self.ext_head(x)
@@ -140,7 +143,7 @@ class C2N_G(nn.Module):
 
         # make initial dep noise feature
         get_feat_dep = torch_distb.Normal(loc=feat_CL[:, :self.n_ch_unit, :, :],
-                                          scale=feat_CL[:, self.n_ch_unit:, :, :])
+                                          scale=F.relu(feat_CL[:, self.n_ch_unit:, :, :])+d)
         feat_noise_dep = get_feat_dep.rsample().to(x.device)
 
         # make initial indep noise feature
