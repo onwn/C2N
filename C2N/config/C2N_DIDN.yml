@@ -1,8 +1,8 @@
 # region - model
 model:
-  Generator:     C2N_G
+  Generator: C2N_G
   Discriminator: C2N_D
-  Denoiser:      DIDN_8
+  Denoiser: DIDN_8
 
   color: BGR
 
@@ -11,26 +11,14 @@ model:
 
 # region - common train
 train:
-  aug: 'rotflip'
+  aug: "rotflip"
 # endregion - common train
 
 # region - train_GAN
 train_GAN:
-  n_epoch: 36
-  batch_size: 36
-  imsize: 96
-  n_patch: 36000
-
   loss:
     GAN_adv: 1.*wGAN-GP
     GAN_con: 1e-2*batch_zero_mean
-
-  lr: 1e-4
-  lr_sched:
-    type: step
-    step:
-      step_size: 3
-      gamma: 0.8
 
   dset_N: prep_SIDD_Medium_sRGB
   dset_CL: prep_SIDD_Medium_sRGB
@@ -43,19 +31,8 @@ train_GAN:
 
 # region - train_DNer
 train_DNer:
-  n_epoch: 32
-  batch_size: 16
-  imsize: 96
-
   loss:
     DN: 1.*L1
-
-  lr: 1e-4
-  lr_sched:
-    type: step
-    step:
-      step_size: 4
-      gamma: 0.71
 
   dset: prep_SIDD_Medium_sRGB
   noise_additive: None

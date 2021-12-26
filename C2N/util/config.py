@@ -1,10 +1,14 @@
+import os
+
 import yaml
 
 
 class ConfigParser:
     def __init__(self, args):
         # load model configuration
-        with open(args.config) as f:
+        path_config = os.path.join('C2N', 'config')
+        fname_config = f'{os.path.splitext(os.path.basename(args.config))[0]}.yml'
+        with open(os.path.join(path_config, fname_config)) as f:
             self.config = yaml.load(f, Loader=yaml.FullLoader)
 
         # load argument
@@ -23,17 +27,3 @@ class ConfigParser:
                 d[key] = None
             if isinstance(d[key], dict):
                 self.convert_None(d[key])
-
-
-if __name__ == '__main__':
-    import argparse
-    args = argparse.ArgumentParser()
-    args.add_argument('-c', '--config', default=None, type=str)
-    args.add_argument('-d', '--device', default=None, type=str)
-    args.add_argument('-r', '--resume', action='store_true')
-
-    args = args.parse_args()
-
-    args.config = './conf/resnet_cfg.yaml'
-
-    cp = ConfigParser(args)

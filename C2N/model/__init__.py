@@ -18,6 +18,6 @@ def get_model(name_model):
     if name_model is None:
         return None
     else:
-        module_model = import_module('src.model.{}'.format(dict_modulename[name_model]))
+        module_model = import_module('C2N.model.{}'.format(dict_modulename[name_model]))
         model_class = getattr(module_model, name_model)
         return model_class()

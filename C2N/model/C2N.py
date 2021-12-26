@@ -3,8 +3,8 @@ import torch.distributions as torch_distb
 import torch.nn as nn
 import torch.nn.functional as F
 
-
 d = 1e-6
+
 
 class ResBlock(nn.Module):
     def __init__(self, n_ch_in, ksize=3, bias=True):
@@ -142,8 +142,9 @@ class C2N_G(nn.Module):
         feat_CL = self.ext(feat_CL)
 
         # make initial dep noise feature
+        normal_scale = F.relu(feat_CL[:, self.n_ch_unit:, :, :]) + d
         get_feat_dep = torch_distb.Normal(loc=feat_CL[:, :self.n_ch_unit, :, :],
-                                          scale=F.relu(feat_CL[:, self.n_ch_unit:, :, :])+d)
+                                          scale=normal_scale)
         feat_noise_dep = get_feat_dep.rsample().to(x.device)
 
         # make initial indep noise feature

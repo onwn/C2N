@@ -11,3 +11,6 @@ ckpt/
 data/
 !data/.gitkeep
 results/
+
+# for macOS
+**/.DS_Store
