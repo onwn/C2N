@@ -81,6 +81,7 @@ def denoise_single_img(configs, denoiser, img_path):
     denoised = denoised.cpu().detach().squeeze(0).numpy()
     denoised = denoised.transpose(1, 2, 0)
     denoised = denoised * 255.0
+    denoised += 0.5
     denoised = np.clip(denoised, 0., 255.)
     denoised = denoised.astype(np.uint8)
 

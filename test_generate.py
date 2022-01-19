@@ -1,4 +1,5 @@
 import argparse
+from operator import ge
 import os
 
 import cv2
@@ -81,6 +82,7 @@ def generate_single_img(configs, generator, img_path):
     generated = generated.cpu().detach().squeeze(0).numpy()
     generated = generated.transpose(1, 2, 0)
     generated = generated * 255.0
+    generated += 0.5
     generated = np.clip(generated, 0., 255.)
     generated = generated.astype(np.uint8)
 
