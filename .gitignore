@@ -10,11 +10,11 @@ ckpt/
 # data
 data/
 !data/.gitkeep
-!data/ex1.png
-!data/ex2.png
+!data/clean_ex1.png
+!data/clean_ex2.png
 !data/SIDD_clean_examples
-!data/SIDD_ex1_noisy.png
-!data/DND_ex1_noisy.png
+!data/noisy_ex1_SIDD.png
+!data/noisy_ex2_DND.png
 results/
 
 # for macOS

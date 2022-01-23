@@ -86,8 +86,8 @@ Examples:
 
 ```bash
 # Generate on single clean image
-python test_generate.py --ckpt C2N-SIDD_to_SIDD.ckpt --mode single --data ex1.png --gpu 0
-python test_generate.py --ckpt C2N-DND_to_SIDD.ckpt --mode single --data ex2.png --gpu 0
+python test_generate.py --ckpt C2N-SIDD_to_SIDD.ckpt --mode single --data clean_ex1.png --gpu 0
+python test_generate.py --ckpt C2N-DND_to_SIDD.ckpt --mode single --data clean_ex2.png --gpu 0
 
 # Generate on clean images in a dataset
 python test_generate.py --ckpt C2N-SIDD_to_SIDD.ckpt --mode dataset --data SIDD_clean_examples --gpu 0
@@ -111,9 +111,9 @@ Examples:
 
 ```bash
 # Denoise single noisy image
-python test_denoise.py --config C2N_DnCNN --ckpt DnCNN-SIDD_to_SIDD-on_SIDD --mode single --data SIDD_ex1_noisy.png --gpu 0
-python test_denoise.py --config C2N_DIDN --ckpt DIDN-SIDD_to_SIDD-on_SIDD --mode single --data SIDD_ex1_noisy.png --gpu 0
-python test_denoise.py --config C2N_DIDN --ckpt DIDN-SIDD_to_DND-on_SIDD --mode single --data DND_ex1_noisy.png --gpu 0
+python test_denoise.py --config C2N_DnCNN --ckpt DnCNN-SIDD_to_SIDD-on_SIDD --mode single --data noisy_ex1_SIDD.png --gpu 0
+python test_denoise.py --config C2N_DIDN --ckpt DIDN-SIDD_to_SIDD-on_SIDD --mode single --data noisy_ex1_SIDD.png --gpu 0
+python test_denoise.py --config C2N_DIDN --ckpt DIDN-SIDD_to_DND-on_SIDD --mode single --data noisy_ex2_DND.png --gpu 0
 
 # Denoise noisy images in a dataset
 python test_denoise.py --config C2N_DnCNN --ckpt DnCNN-SIDD_to_SIDD-on_SIDD --mode dataset --data SIDD_benchmark --gpu 0
@@ -122,6 +122,6 @@ python test_denoise.py --config C2N_DIDN --ckpt DIDN-SIDD_to_DND-on_SIDD --mode 
 
 # Denoise the generated images from C2N
 # You may copy the generated images in `results/[input_clean_data_path*]` to `data/[input_clean_data_path*]_generated.png`, for example.
-python test_denoise.py --config C2N_DIDN --ckpt DIDN-SIDD_to_SIDD-on_SIDD --mode single --data ex1_generated.png --gpu 0
-python test_denoise.py --config C2N_DIDN --ckpt DIDN-SIDD_to_DND-on_SIDD --mode single --data ex2_generated.png --gpu 0
+python test_denoise.py --config C2N_DIDN --ckpt DIDN-SIDD_to_SIDD-on_SIDD --mode single --data clean_ex1_generated.png --gpu 0
+python test_denoise.py --config C2N_DIDN --ckpt DIDN-SIDD_to_DND-on_SIDD --mode single --data clean_ex2_generated.png --gpu 0
 ```
