@@ -1,5 +1,4 @@
 import argparse
-from operator import ge
 import os
 
 import cv2
