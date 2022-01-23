@@ -1,0 +1,30 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: check-ast
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: double-quote-string-fixer
+      # - id: no-commit-to-branch
+      #   args: ["--branch", "main"]
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.8.4
+    hooks:
+      - id: flake8
+        args:
+          # better length for research-purpose code,
+          # also making isort line length compatible with black
+          - "--max-line-length=88"
+          # E501: really long comments
+          - "--ignore=E501"
+          # E241: multiple spaces after ','
+          - "--ignore=E241"
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.8.0
+    hooks:
+      - id: isort
+        name: isort (python)

@@ -1,0 +1,45 @@
+# region - model
+model:
+  Generator: C2N_G
+  Discriminator: C2N_D
+  Denoiser: CDnCNN_B
+
+  color: BGR
+
+  GAN_n_r: 32
+# endregion - model
+
+# region - common train
+train:
+  aug: "rotflip"
+# endregion - common train
+
+# region - train_GAN
+train_GAN:
+  loss:
+    GAN_adv: 1.*wGAN-GP
+    GAN_con: 1e-2*batch_zero_mean
+
+  dset_N: prep_SIDD_Medium_sRGB
+  dset_CL: prep_SIDD_Medium_sRGB
+  noise_additive: None
+  salt_pepper: None
+  crop_patch: True
+
+  preload: False
+# endregion - train_GAN
+
+# region - train_DNer
+train_DNer:
+  loss:
+    DN: 1.*L1
+
+  dset: prep_SIDD_Medium_sRGB
+  noise_additive: None
+  salt_pepper: None
+  crop_patch: True
+
+  dset_gen_CL: None
+  n_patch_gen: 18000
+  loadname_CLtoN: None
+# endregion - train_DNer
