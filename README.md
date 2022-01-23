@@ -61,14 +61,14 @@ Download following pre-trained models:
 
 | Generator | Clean | Noisy |  config   | Pre-trained |
 | :-------: | :---: | :---: | :-------: | :---------: |
-|    C2N    | SIDD  | SIDD  | C2N_DnCNN |  [model]()  |
-|    C2N    | SIDD  |  DND  | C2N_DnCNN |  [model]()  |
+|    C2N    | SIDD  | SIDD  | C2N_DnCNN |  [model](https://drive.google.com/file/d/1Cn0KptLHd8p6v4_72PMvjssZbzTmgN4Z/view?usp=sharing)  |
+|    C2N    | SIDD  |  DND  | C2N_DnCNN |  [model](https://drive.google.com/file/d/1Ce2Z9Gz7YssiIFIgGmj86xwDDqjgl2-S/view?usp=sharing)  |
 
-| Denoiser | Generator | Clean | Noisy | Clean (denoiser) |  config   | Pre-trained |
+| Denoiser | Generator | Clean | Noisy | Clean (denoiser train) |  config   | Pre-trained |
 | :------: | :-------: | :---: | :---: | :--------------: | :-------: | :---------: |
-|  DnCNN   |    C2N    | SIDD  | SIDD  |       SIDD       | C2N_DnCNN |  [model]()  |
-|   DIDN   |    C2N    | SIDD  | SIDD  |       SIDD       | C2N_DIDN  |  [model]()  |
-|   DIDN   |    C2N    | SIDD  |  DND  |       SIDD       | C2N_DIDN  |  [model]()  |
+|  DnCNN   |    C2N    | SIDD  | SIDD  |       SIDD       | C2N_DnCNN |  [model](https://drive.google.com/file/d/1wxuhXwhHYVLiAuUvwqIBiOX8NcFzdWmN/view?usp=sharing)  |
+|   DIDN   |    C2N    | SIDD  | SIDD  |       SIDD       | C2N_DIDN  |  [model](https://drive.google.com/file/d/12Q5zZp3l_sH4pofXJraZbiEtAQ-kCtWD/view?usp=sharing)  |
+|   DIDN   |    C2N    | SIDD  |  DND  |       SIDD       | C2N_DIDN  |  [model](https://drive.google.com/file/d/1gZQ3mfhLlnN0FZD3lxZGiApY8nVJBPT-/view?usp=sharing)  |
 
 ---
 
