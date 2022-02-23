@@ -1,4 +1,4 @@
-# C2N: Practical Generative Noise Modeling for Real-World Denoising - Official pyTorch release
+# C2N: Practical Generative Noise Modeling for Real-World Denoising - Official PyTorch release
 
 This is an official PyTorch release of the paper
 [**"C2N: Practical Generative Noise Modeling for Real-World Denoising"**](https://openaccess.thecvf.com/content/ICCV2021/papers/Jang_C2N_Practical_Generative_Noise_Modeling_for_Real-World_Denoising_ICCV_2021_paper.pdf)
